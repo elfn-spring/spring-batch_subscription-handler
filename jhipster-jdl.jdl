@@ -1,0 +1,40 @@
+entity Client {
+	fname String
+	lname String
+	email String
+    SubscriptionDate Instant
+}
+
+entity Email {
+	subject String
+	from String
+	to String
+    content String
+    sendingDate Instant
+}
+
+entity Subscription {
+	type Type
+    status State
+    SubscriptionDate Instant
+    ExpirationDate Instant
+}
+
+enum State {
+    EXPIRED, VALID, ALMOST_EXPIRED
+}
+
+enum Type {
+    BASIC, MEDIUM, PREMIUM
+}
+relationship OneToMany {
+	Client to Email{client}
+	/**
+	* A relationship
+	*/
+	Client to
+	/**
+	* Another side of the same relationship
+	*/
+	Subscription{client}
+}
