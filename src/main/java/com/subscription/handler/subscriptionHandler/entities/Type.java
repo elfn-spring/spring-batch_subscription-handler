@@ -1,4 +1,4 @@
-package org.subcription.handler.entities;
+package com.subscription.handler.subscriptionHandler.entities;
 
 /**
  * @PROJECT subscriptionHandler
