@@ -5,6 +5,7 @@ import com.subscription.handler.subscriptionHandler.daos.EmailEntityRepository;
 import com.subscription.handler.subscriptionHandler.entities.EmailEntity;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import com.subscription.handler.subscriptionHandler.services.MailSender;
+import com.subscription.handler.subscriptionHandler.services.utils.PDFGeneratorTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -31,6 +32,8 @@ public class MailSenderImpl implements MailSender {
 
   @Value("${spring.mail.username}")
   private String mailexpeditor;
+
+  private PDFGeneratorTask pdfGeneratorTask = new PDFGeneratorTask();
 
   @Override
   public void send(EmailEntity emailEntity, Subscription subscription) throws MessagingException, UnsupportedEncodingException {

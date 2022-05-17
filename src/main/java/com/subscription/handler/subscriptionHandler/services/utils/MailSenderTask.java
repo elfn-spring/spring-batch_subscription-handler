@@ -1,8 +1,14 @@
 package com.subscription.handler.subscriptionHandler.services.utils;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfWriter;
+import com.subscription.handler.subscriptionHandler.dtos.SubscriptionDTO;
+import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @PROJECT subscriptionHandler
@@ -24,5 +30,10 @@ public class MailSenderTask extends AbstractTask{
     {
       javaMailSender.send(this.mimeMessage);
     }
+  }
+
+  @Override
+  public Document generatePDF(HttpServletResponse response, SubscriptionDTO subscriptionDTO){
+    return null;
   }
 }

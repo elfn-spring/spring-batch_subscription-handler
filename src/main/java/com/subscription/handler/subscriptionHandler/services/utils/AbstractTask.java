@@ -1,4 +1,11 @@
 package com.subscription.handler.subscriptionHandler.services.utils;
+import javax.servlet.http.HttpServletResponse;
+
+import com.lowagie.text.Document;
+import com.subscription.handler.subscriptionHandler.dtos.SubscriptionDTO;
+import com.subscription.handler.subscriptionHandler.entities.Subscription;
+
+import java.io.IOException;
 
 /**
  * @PROJECT subscriptionHandler
@@ -15,4 +22,5 @@ public abstract class AbstractTask implements Runnable{
   }
 
   public abstract void send();
+  public abstract Document generatePDF(HttpServletResponse response , SubscriptionDTO subscriptionDTO) throws IOException;
 }
