@@ -18,15 +18,15 @@ public class Subscription {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  private Type subscriptionType;
-  private State status;
+  private String subscriptionType;
+  private String status;
   private Date subscriptionDate;
   private Date expirationDate;
 
   @OneToMany(mappedBy = "subscription",cascade = CascadeType.ALL)
   private Set<Client> clients = new HashSet<>();
 
-  public Subscription(String name, Type subscriptionType, State status, Date subscriptionDate, Date expirationDate, Set<Client> clients) {
+  public Subscription(String name, String subscriptionType, String status, Date subscriptionDate, Date expirationDate, Set<Client> clients) {
     this.name = name;
     this.subscriptionType = subscriptionType;
     this.status = status;
@@ -55,19 +55,19 @@ public class Subscription {
     this.name = name;
   }
 
-  public Type getSubscriptionType() {
+  public String getSubscriptionType() {
     return subscriptionType;
   }
 
-  public void setSubscriptionType(Type subscriptionType) {
+  public void setSubscriptionType(String subscriptionType) {
     this.subscriptionType = subscriptionType;
   }
 
-  public State getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(State status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

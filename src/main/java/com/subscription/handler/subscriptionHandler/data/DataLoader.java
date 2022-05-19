@@ -56,9 +56,9 @@ public class DataLoader implements Runnable {
 //    clients.add(client2);
 
 
-    Subscription canal = new Subscription("CANAL+", Type.BASIC, State.VALID, new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-17"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-19"), new HashSet<>());
-    Subscription netfix = new Subscription("NETFLIX", Type.MEDIUM, State.VALID, new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
-    Subscription pluralsight = new Subscription("PLURALSIGHT", Type.MEDIUM, State.VALID, new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
+    Subscription canal = new Subscription("CANAL+", "BASIC", "VALID", new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-17"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-19"), new HashSet<>());
+    Subscription netfix = new Subscription("NETFLIX", "MEDIUM", "VALID", new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
+    Subscription pluralsight = new Subscription("PLURALSIGHT", "MEDIUM", "VALID", new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
 
     client1.setSubscription(canal);
     client2.setSubscription(pluralsight);
