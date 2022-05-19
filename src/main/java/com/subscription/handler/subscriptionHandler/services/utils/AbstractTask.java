@@ -22,5 +22,5 @@ public abstract class AbstractTask implements Runnable{
   }
 
   public abstract void send();
-  public abstract Document generatePDF(HttpServletResponse response , SubscriptionDTO subscriptionDTO) throws IOException;
+  public abstract Document generatePDF(HttpServletResponse response , Subscription subscription) throws IOException;
 }

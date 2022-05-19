@@ -13,20 +13,85 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "subscription")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class Subscription {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  private String name;
   private Type subscriptionType;
   private State status;
   private Date subscriptionDate;
   private Date expirationDate;
 
   @OneToMany(mappedBy = "subscription",cascade = CascadeType.ALL)
-  private Set<Client> products = new HashSet<>();
+  private Set<Client> clients = new HashSet<>();
+
+  public Subscription(String name, Type subscriptionType, State status, Date subscriptionDate, Date expirationDate, Set<Client> clients) {
+    this.name = name;
+    this.subscriptionType = subscriptionType;
+    this.status = status;
+    this.subscriptionDate = subscriptionDate;
+    this.expirationDate = expirationDate;
+    this.clients = clients;
+  }
+
+  public Subscription() {
+
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Type getSubscriptionType() {
+    return subscriptionType;
+  }
+
+  public void setSubscriptionType(Type subscriptionType) {
+    this.subscriptionType = subscriptionType;
+  }
+
+  public State getStatus() {
+    return status;
+  }
+
+  public void setStatus(State status) {
+    this.status = status;
+  }
+
+  public Date getSubscriptionDate() {
+    return subscriptionDate;
+  }
+
+  public void setSubscriptionDate(Date subscriptionDate) {
+    this.subscriptionDate = subscriptionDate;
+  }
+
+  public Date getExpirationDate() {
+    return expirationDate;
+  }
+
+  public void setExpirationDate(Date expirationDate) {
+    this.expirationDate = expirationDate;
+  }
+
+  public Set<Client> getClients() {
+    return clients;
+  }
+
+  public void setClients(Set<Client> clients) {
+    this.clients = clients;
+  }
 }

@@ -1,19 +1,32 @@
 package com.subscription.handler.subscriptionHandler.dtos;
 
+import com.subscription.handler.subscriptionHandler.entities.Client;
 import com.subscription.handler.subscriptionHandler.entities.State;
 import com.subscription.handler.subscriptionHandler.entities.Type;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @PROJECT subscriptionHandler
  * @Author Elimane on 17/05/2022
  */
 public class SubscriptionDTO {
+  private String name;
   private Type subscriptionType;
   private State status;
   private Date subscriptionDate;
   private Date expirationDate;
+  private Set<Client> clients = new HashSet<>();
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public Type getSubscriptionType() {
     return subscriptionType;
@@ -45,5 +58,13 @@ public class SubscriptionDTO {
 
   public void setExpirationDate(Date expirationDate) {
     this.expirationDate = expirationDate;
+  }
+
+  public Set<Client> getClients() {
+    return clients;
+  }
+
+  public void setClients(Set<Client> clients) {
+    this.clients = clients;
   }
 }

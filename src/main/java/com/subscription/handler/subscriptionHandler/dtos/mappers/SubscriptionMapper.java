@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
  * @PROJECT subscriptionHandler
  * @Author Elimane on 17/05/2022
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SubscriptionMapper {
   SubscriptionDTO toSubscriptionDTO(Subscription subscription);
   Subscription toSubscription(SubscriptionDTO subscriptionDTO);

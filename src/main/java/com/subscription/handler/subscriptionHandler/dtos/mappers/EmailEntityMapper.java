@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
  * @PROJECT subscriptionHandler
  * @Author Elimane on 17/05/2022
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EmailEntityMapper {
   EmailEntityDTO toEmailDTO(EmailEntity emailEntity);
   EmailEntity toEmail(EmailEntityDTO emailEntityDTO);

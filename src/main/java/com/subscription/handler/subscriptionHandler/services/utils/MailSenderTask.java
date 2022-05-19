@@ -33,7 +33,9 @@ public class MailSenderTask extends AbstractTask{
   }
 
   @Override
-  public Document generatePDF(HttpServletResponse response, SubscriptionDTO subscriptionDTO){
+  public Document generatePDF(HttpServletResponse response, Subscription subscription) throws IOException {
     return null;
   }
+
+
 }

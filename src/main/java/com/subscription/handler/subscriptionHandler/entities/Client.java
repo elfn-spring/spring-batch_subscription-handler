@@ -13,11 +13,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "client")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class Client {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,4 +27,74 @@ public class Client {
 
   @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
   private Set<EmailEntity> mails = new HashSet<>();
+
+  public Client(Long id, String firstName, String lastName, String email, Date expirationDate, Subscription subscription, Set<EmailEntity> mails) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.expirationDate = expirationDate;
+    this.subscription = subscription;
+    this.mails = mails;
+  }
+
+  public Client() {
+
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Date getExpirationDate() {
+    return expirationDate;
+  }
+
+  public void setExpirationDate(Date expirationDate) {
+    this.expirationDate = expirationDate;
+  }
+
+  public Subscription getSubscription() {
+    return subscription;
+  }
+
+  public void setSubscription(Subscription subscription) {
+    this.subscription = subscription;
+  }
+
+  public Set<EmailEntity> getMails() {
+    return mails;
+  }
+
+  public void setMails(Set<EmailEntity> mails) {
+    this.mails = mails;
+  }
 }
