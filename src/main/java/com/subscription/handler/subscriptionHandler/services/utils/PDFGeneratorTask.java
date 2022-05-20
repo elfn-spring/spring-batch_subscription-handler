@@ -28,7 +28,7 @@ public class PDFGeneratorTask extends AbstractTask {
   }
 
   @Override
-  public Document generatePDF(HttpServletResponse response, Subscription subscription) throws IOException {
+  public Document generatePDF(Subscription subscription) throws IOException {
 
     SubscriptionDTO subscriptionDTO = subscriptionMapper.toSubscriptionDTO(subscription);
 

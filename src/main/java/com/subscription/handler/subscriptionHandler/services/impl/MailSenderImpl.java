@@ -74,7 +74,7 @@ public class MailSenderImpl implements MailSender, DateUpdater {
 
 
     // Generation pdf
-    Document document = pdfGeneratorTask.generatePDF(response, subscription);
+    Document document = pdfGeneratorTask.generatePDF(subscription);
 
     //Encapsuler le contenu du mail dans un mimeMessage
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -83,7 +83,7 @@ public class MailSenderImpl implements MailSender, DateUpdater {
     MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
 
-    if(subscription.getStatus() == State.ALMOST_EXPIRED) {
+    if(subscription.getStatus() == "ALMOST_EXPIRED") {
       Client client = subscription.getClients().stream().filter(c -> c.getSubscription().getName().equalsIgnoreCase(subscription.getName())).findAny().get();
       String mailSubject = client.getFirstName() + " " + client.getLastName() + ", votre alerte d'expiration de produit";
       String mailContent = "<p><b> Sender name: </b> " + client.getFirstName() + " " + client.getLastName() + "</p>";
@@ -111,7 +111,7 @@ public class MailSenderImpl implements MailSender, DateUpdater {
 
     }
 
-    if(subscription.getStatus() == State.EXPIRED) {
+    if(subscription.getStatus() == "EXPIRED") {
 
       Client client = subscription.getClients().stream().filter(c -> c.getSubscription().getName().equalsIgnoreCase(subscription.getName())).findAny().get();
       String mailSubject = client.getFirstName() + " " + client.getLastName() + ", votre alerte d'expiration d'abonnement'";

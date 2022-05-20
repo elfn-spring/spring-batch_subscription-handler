@@ -15,5 +15,5 @@ import java.text.ParseException;
  * @Author Elimane on 17/05/2022
  */
 public interface MailSender {
-  public void send(EmailEntity emailEntity, Subscription subscription, HttpServletResponse response) throws MessagingException, IOException, ParseException;
+  public void send(EmailEntity emailEntity, Subscription subscription);
 }
