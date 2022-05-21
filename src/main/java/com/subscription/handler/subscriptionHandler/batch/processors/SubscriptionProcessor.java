@@ -4,6 +4,7 @@ import com.subscription.handler.subscriptionHandler.entities.State;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import com.subscription.handler.subscriptionHandler.services.DateUpdater;
 import com.subscription.handler.subscriptionHandler.services.MailSender;
+import com.subscription.handler.subscriptionHandler.services.impl.DateUpdaterImpl;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +19,7 @@ import java.util.Date;
  */
 public class SubscriptionProcessor implements ItemProcessor<Subscription, Subscription> {
   @Autowired
-  private DateUpdater dateUpdater;
+  private DateUpdater dateUpdater = new DateUpdaterImpl();
 
   @Override
   public Subscription process(Subscription subscription) throws Exception {

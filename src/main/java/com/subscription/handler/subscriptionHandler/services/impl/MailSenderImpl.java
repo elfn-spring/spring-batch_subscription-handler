@@ -39,7 +39,7 @@ import java.util.stream.Stream;
  * @Author Elimane on 17/05/2022
  */
 @Service
-public class MailSenderImpl implements MailSender, DateUpdater {
+public class MailSenderImpl implements MailSender {
 
   private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
@@ -154,17 +154,4 @@ public class MailSenderImpl implements MailSender, DateUpdater {
 
   }
 
-  @Override
-  public Date getNewDate(Date oldDate) throws ParseException {
-    //New Date after added one month
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    String strOldDate = format.format(oldDate);
-    java.sql.Date old = java.sql.Date.valueOf(strOldDate);
-    LocalDate localOldDate = old.toLocalDate();
-
-    LocalDate newLocalDate = localOldDate.plusMonths(1);
-
-    Date newDate = format.parse(newLocalDate.toString());
-    return newDate;
-  }
 }

@@ -1,5 +1,6 @@
 package com.subscription.handler.subscriptionHandler.batch.writer;
 
+import com.subscription.handler.subscriptionHandler.entities.Client;
 import com.subscription.handler.subscriptionHandler.entities.EmailEntity;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import com.subscription.handler.subscriptionHandler.services.MailSender;
@@ -8,6 +9,7 @@ import org.springframework.batch.item.ItemWriter;
 
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,16 +30,17 @@ public class SubscriptionWriter implements ItemWriter<Subscription> {
     //Pour chaque produit on va generer le contenu du mail
     for(Subscription  subscription : subscriptions)
     {
-      EmailEntity emailEntity = new EmailEntity();
+      EmailEntity emailEntity = new EmailEntity("","","","",new Date(),new Client());
       this.mailSender.send(emailEntity,subscription);
     }
     emptyDirectory();
   }
   public void emptyDirectory(){
     File folder = new File("System.getProperty(\"user.dir\")+\"/pdf/");
-
-    for (File file: folder.listFiles()) {
-      file.delete();
+    if(folder.exists() && (folder.listFiles().length != 0)){
+      for (File file: folder.listFiles()) {
+        file.delete();
+      }
     }
 
   }

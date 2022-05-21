@@ -62,7 +62,8 @@ public class BatchConfig extends QuartzJobBean {
   public Trigger trigger(){
     SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
       .simpleSchedule()
-      .withIntervalInSeconds(20)//To launch our job every thirty seconds
+      .withIntervalInSeconds(20)//To launch our job every twenty seconds
+     // .withIntervalInHours(23)//To launch at the end of the day 23h00
       .repeatForever();
 
     return TriggerBuilder.newTrigger()
@@ -155,7 +156,7 @@ public class BatchConfig extends QuartzJobBean {
 
   @Bean
   public Job job(MailSender mailSender) throws Exception {
-    return  this.jobBuilderFactory.get("job2J")
+    return  this.jobBuilderFactory.get("job2L")
       .incrementer(new RunIdIncrementer())//To increment jobparameters for scheduling with quartz
       .start(chunkBasedStep(mailSender))
       .build();

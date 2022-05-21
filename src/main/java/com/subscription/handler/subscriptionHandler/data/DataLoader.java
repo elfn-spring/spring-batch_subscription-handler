@@ -61,9 +61,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 //    clients.add(client2);
 
 
-    Subscription canal = new Subscription("CANAL+", "BASIC", (State.VALID).name(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-17"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
-    Subscription netfix = new Subscription("NETFLIX", "MEDIUM", (State.VALID).name(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
-    Subscription pluralsight = new Subscription("PLURALSIGHT", "MEDIUM", (State.VALID.name()).toString(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
+    Subscription canal = new Subscription("CANAL+", "BASIC", (State.VALID).name(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-17"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-21"), new HashSet<>());
+    Subscription netfix = new Subscription("NETFLIX", "MEDIUM", (State.VALID).name(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-21"), new HashSet<>());
+    Subscription pluralsight = new Subscription("PLURALSIGHT", "MEDIUM", (State.VALID.name()).toString(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-21"), new HashSet<>());
 
     client1.setSubscription(canal);
     client2.setSubscription(pluralsight);
