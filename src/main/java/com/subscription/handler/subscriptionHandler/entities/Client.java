@@ -12,7 +12,7 @@ import java.util.Set;
  * @Author Elimane on 18/10/2021
  */
 @Entity
-@Table(name = "client")
+@Table(name = "CLIENT")
 public class Client {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,6 @@ public class Client {
   private String firstName;
   private String lastName;
   private String email;
-  private Date expirationDate;
 
   @ManyToOne
   private Subscription subscription;
@@ -28,19 +27,22 @@ public class Client {
   @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
   private Set<EmailEntity> mails = new HashSet<>();
 
-  public Client(Long id, String firstName, String lastName, String email, Date expirationDate, Subscription subscription, Set<EmailEntity> mails) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.expirationDate = expirationDate;
-    this.subscription = subscription;
-    this.mails = mails;
-  }
 
   public Client() {
 
   }
+  public Client(String firstName, String lastName, String email, Subscription subscription, Set<EmailEntity> mails) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.subscription = subscription;
+    this.mails = mails;
+  }
+
+
+
+
+
 
   public Long getId() {
     return id;
@@ -74,13 +76,6 @@ public class Client {
     this.email = email;
   }
 
-  public Date getExpirationDate() {
-    return expirationDate;
-  }
-
-  public void setExpirationDate(Date expirationDate) {
-    this.expirationDate = expirationDate;
-  }
 
   public Subscription getSubscription() {
     return subscription;

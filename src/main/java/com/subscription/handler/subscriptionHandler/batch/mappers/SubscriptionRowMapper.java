@@ -19,11 +19,11 @@ public class SubscriptionRowMapper implements RowMapper<Subscription> {
     Client client = new Client();
 
     subscription.setId(rs.getLong("id"));
-    client.setId(rs.getLong("client_id"));
     subscription.getClients().add(client);
     subscription.setStatus(rs.getString("status"));
-    subscription.setSubscriptionType(rs.getString("type"));
+    subscription.setSubscriptionType(rs.getString("subscription_type"));
     subscription.setExpirationDate(rs.getDate("expiration_date"));
+    subscription.setSubscriptionDate(rs.getDate("subscription_date"));
     subscription.setName(rs.getString("name"));
 
     return subscription;

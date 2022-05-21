@@ -3,10 +3,11 @@ package com.subscription.handler.subscriptionHandler.batch.writer;
 import com.subscription.handler.subscriptionHandler.entities.EmailEntity;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import com.subscription.handler.subscriptionHandler.services.MailSender;
+import com.subscription.handler.subscriptionHandler.services.utils.PDFGeneratorTask;
 import org.springframework.batch.item.ItemWriter;
 
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
+
+import java.io.File;
 import java.util.List;
 
 /**
@@ -30,6 +31,15 @@ public class SubscriptionWriter implements ItemWriter<Subscription> {
       EmailEntity emailEntity = new EmailEntity();
       this.mailSender.send(emailEntity,subscription);
     }
+    emptyDirectory();
+  }
+  public void emptyDirectory(){
+    File folder = new File("System.getProperty(\"user.dir\")+\"/pdf/");
+
+    for (File file: folder.listFiles()) {
+      file.delete();
+    }
 
   }
+
 }

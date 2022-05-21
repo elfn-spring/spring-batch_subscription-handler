@@ -2,7 +2,10 @@ package com.subscription.handler.subscriptionHandler.batch.processors;
 
 import com.subscription.handler.subscriptionHandler.entities.State;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
+import com.subscription.handler.subscriptionHandler.services.DateUpdater;
+import com.subscription.handler.subscriptionHandler.services.MailSender;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,6 +17,9 @@ import java.util.Date;
  * @Author Elimane on 19/05/2022
  */
 public class SubscriptionProcessor implements ItemProcessor<Subscription, Subscription> {
+  @Autowired
+  private DateUpdater dateUpdater;
+
   @Override
   public Subscription process(Subscription subscription) throws Exception {
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -33,12 +39,14 @@ public class SubscriptionProcessor implements ItemProcessor<Subscription, Subscr
     boolean isAlmostExpired = ((daysBetween == 5)) ? true : false;
 
     if(isExpired){
-      subscription.setStatus((State.EXPIRED).toString());
+      subscription.setStatus((State.EXPIRED).name());
+      subscription.setExpirationDate(dateUpdater.getNewDate(subscription.getExpirationDate()));
+      subscription.setSubscriptionDate(new Date());
       return subscription;
     }
 
     if(isAlmostExpired){
-      subscription.setStatus((State.ALMOST_EXPIRED).toString());
+      subscription.setStatus((State.ALMOST_EXPIRED).name());
       return subscription;
     }
     return null;

@@ -7,10 +7,14 @@ import com.subscription.handler.subscriptionHandler.entities.Client;
 import com.subscription.handler.subscriptionHandler.entities.State;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import com.subscription.handler.subscriptionHandler.entities.Type;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +23,7 @@ import java.util.Set;
  * @Author Elimane on 19/05/2022
  */
 @Component
-public class DataLoader implements Runnable {
+public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
   private final ClientRepository clientRepository;
   private final SubscriptionRepository subscriptionRepository;
@@ -32,7 +36,8 @@ public class DataLoader implements Runnable {
   }
 
   @Override
-  public void run() {
+  @Transactional
+  public void onApplicationEvent(ContextRefreshedEvent event) {
     try {
       load();
     } catch (ParseException e) {
@@ -47,18 +52,18 @@ public class DataLoader implements Runnable {
     client1.setLastName("Fofana");
 
     Client client2 = new Client();
-    client1.setEmail("gelkov30@gmail.com");
-    client1.setFirstName("John");
-    client1.setLastName("Doe");
+    client2.setEmail("gelkov30@gmail.com");
+    client2.setFirstName("John");
+    client2.setLastName("Doe");
 
 //    Set<Client> clients = new HashSet<>();
 //    clients.add(client1);
 //    clients.add(client2);
 
 
-    Subscription canal = new Subscription("CANAL+", "BASIC", "VALID", new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-17"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-19"), new HashSet<>());
-    Subscription netfix = new Subscription("NETFLIX", "MEDIUM", "VALID", new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
-    Subscription pluralsight = new Subscription("PLURALSIGHT", "MEDIUM", "VALID", new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
+    Subscription canal = new Subscription("CANAL+", "BASIC", (State.VALID).name(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-17"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
+    Subscription netfix = new Subscription("NETFLIX", "MEDIUM", (State.VALID).name(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
+    Subscription pluralsight = new Subscription("PLURALSIGHT", "MEDIUM", (State.VALID.name()).toString(), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-18"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-20"), new HashSet<>());
 
     client1.setSubscription(canal);
     client2.setSubscription(pluralsight);
@@ -73,4 +78,6 @@ public class DataLoader implements Runnable {
     this.clientRepository.save(client1);
     this.clientRepository.save(client2);
   }
+
+
 }

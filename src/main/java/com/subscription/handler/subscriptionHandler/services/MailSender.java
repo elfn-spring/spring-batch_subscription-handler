@@ -5,7 +5,6 @@ import com.subscription.handler.subscriptionHandler.entities.EmailEntity;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -15,5 +14,5 @@ import java.text.ParseException;
  * @Author Elimane on 17/05/2022
  */
 public interface MailSender {
-  public void send(EmailEntity emailEntity, Subscription subscription);
+  public void send(EmailEntity emailEntity, Subscription subscription) throws MessagingException, IOException, ParseException;
 }

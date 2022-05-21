@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -68,13 +67,9 @@ public class MailSenderImpl implements MailSender, DateUpdater {
 
 
   @Override
-  public void send(EmailEntity emailEntity, Subscription subscription, HttpServletResponse response) throws MessagingException, IOException, ParseException {
+  public void send(EmailEntity emailEntity, Subscription subscription) throws MessagingException, IOException, ParseException {
 
 
-
-
-    // Generation pdf
-    Document document = pdfGeneratorTask.generatePDF(subscription);
 
     //Encapsuler le contenu du mail dans un mimeMessage
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -82,9 +77,11 @@ public class MailSenderImpl implements MailSender, DateUpdater {
     //Configurer l'envoi du mail avec un mimeMessageHelper
     MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-    if(subscription.getStatus() == "ALMOST_EXPIRED") {
-      Client client = subscription.getClients().stream().filter(c -> c.getSubscription().getName().equalsIgnoreCase(subscription.getName())).findAny().get();
+
+    if(subscription.getStatus() == (State.ALMOST_EXPIRED).name()) {
+      Client client = clientRepository.findBySubscriptionId(subscription.getId());
       String mailSubject = client.getFirstName() + " " + client.getLastName() + ", votre alerte d'expiration de produit";
       String mailContent = "<p><b> Sender name: </b> " + client.getFirstName() + " " + client.getLastName() + "</p>";
       mailContent += "<p><b> Sender email: </b> " + fromAddr + "</p>";
@@ -104,21 +101,19 @@ public class MailSenderImpl implements MailSender, DateUpdater {
       mimeMessageHelper.setFrom(emailEntity.getFrom(),"My");
       mimeMessageHelper.setText(emailEntity.getContent(), true);
 
-      FileSystemResource fileSystemResource = new FileSystemResource(new File(PDFGeneratorTask.path));
 
-      mimeMessageHelper.addAttachment(fileSystemResource.getFilename(), fileSystemResource);
 
 
     }
 
-    if(subscription.getStatus() == "EXPIRED") {
+    if(subscription.getStatus() == (State.EXPIRED).name()) {
 
-      Client client = subscription.getClients().stream().filter(c -> c.getSubscription().getName().equalsIgnoreCase(subscription.getName())).findAny().get();
+      Client client = clientRepository.findBySubscriptionId(subscription.getId());
       String mailSubject = client.getFirstName() + " " + client.getLastName() + ", votre alerte d'expiration d'abonnement'";
       String mailContent = "<p><b> Sender name: </b> " + client.getFirstName() + " " + client.getLastName() + "</p>";
       mailContent += "<p><b> Sender email: </b> " + fromAddr + "</p>";
       mailContent += "<p><b> Subject: </b> " + mailSubject + "</p>";
-      mailContent += "<p><b> Content: </b> " + "L'abonnement " + subscription.getName() + " (" + subscription.getSubscriptionType() + ") vient d'expirer et a été renouvelé jusqu'au " +getNewDate(subscription.getExpirationDate())+ "</p>";
+      mailContent += "<p><b> Content: </b> " + "L'abonnement " + subscription.getName() + " (" + subscription.getSubscriptionType() + ") vient d'expirer et a été renouvelé jusqu'au " + format.format(subscription.getExpirationDate()) + "</p>";
 
       emailEntity.setSubject(mailSubject);
       emailEntity.setFrom(fromAddr);
@@ -133,6 +128,15 @@ public class MailSenderImpl implements MailSender, DateUpdater {
       mimeMessageHelper.setFrom(emailEntity.getFrom(),"My");
       mimeMessageHelper.setText(emailEntity.getContent(), true);
 
+      // Generation pdf
+     new PDFGeneratorTask().generatePDF(subscription);
+
+      FileSystemResource fileSystemResource = new FileSystemResource(new File(PDFGeneratorTask.path));
+
+      mimeMessageHelper.addAttachment(fileSystemResource.getFilename(), fileSystemResource);
+
+      subscription.setStatus(State.VALID.toString());
+
     }
 
     this.emailRepository.save(emailEntity);
@@ -143,6 +147,8 @@ public class MailSenderImpl implements MailSender, DateUpdater {
 
     //Here we are sending mail quickly with multi-threading
     this.executor.execute(new MailSenderTask(javaMailSender,mimeMessage));
+
+
 
     System.out.println("Mail with attachment sent successfully. ");
 

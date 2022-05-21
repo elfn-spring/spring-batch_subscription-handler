@@ -3,11 +3,11 @@ package com.subscription.handler.subscriptionHandler.services.utils;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import com.subscription.handler.subscriptionHandler.dtos.SubscriptionDTO;
+import com.subscription.handler.subscriptionHandler.entities.Client;
 import com.subscription.handler.subscriptionHandler.entities.Subscription;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -33,9 +33,11 @@ public class MailSenderTask extends AbstractTask{
   }
 
   @Override
-  public Document generatePDF(HttpServletResponse response, Subscription subscription) throws IOException {
-    return null;
+  public void generatePDF(Subscription subscription) throws IOException {
+
   }
+
+
 
 
 }

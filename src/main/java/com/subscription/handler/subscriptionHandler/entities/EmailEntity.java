@@ -10,13 +10,15 @@ import java.util.Date;
  * @Author Elimane on 18/10/2021
  */
 @Entity
-@Table(name = "email")
+@Table(name = "EMAIL")
 public class EmailEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String subject;
+  @Column(name="valueFrom")
   private String from;
+  @Column(name="valueTo")
   private String to;
   private String content;
   private Date sendingDate;
@@ -24,8 +26,7 @@ public class EmailEntity {
   @ManyToOne
   private Client client;
 
-  public EmailEntity(Long id, String subject, String from, String to, String content, Date sendingDate, Client client) {
-    this.id = id;
+  public EmailEntity(String subject, String from, String to, String content, Date sendingDate, Client client) {
     this.subject = subject;
     this.from = from;
     this.to = to;
@@ -37,6 +38,7 @@ public class EmailEntity {
   public EmailEntity() {
 
   }
+
 
   public Long getId() {
     return id;
